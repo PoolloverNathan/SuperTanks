@@ -26,14 +26,14 @@ org $00FFB0
     dw NUI ; native COP
     dw NUI ; native BRK
     dw NUI ; native ABORT
-    dw NUI ; native NMI
+    dw INTERNMI ; native NMI
     dw START ; native RESET - unused
     dw NUI ; native IRQ
     skip 4 ; unused
     dw NUI ; emulated COP
     dw NUI ; emulated BRK - unused since it shares with IRQ in emulation mode
     dw NUI ; emulated ABORT
-    dw NUI ; emulated NMI
+    dw INTERNMI ; emulated NMI
     dw START ; emulated RESET
     dw NUI ; emulated IRQ
     print "Interrupt vector ends at ",pc
