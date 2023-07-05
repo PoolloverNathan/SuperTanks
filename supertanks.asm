@@ -95,7 +95,7 @@ NUI:
     RTI
 
 CG:
-    incbin "graphics.cgr"
+    incbin "palette.cgr"
 
 CGLOAD:
     PHX
