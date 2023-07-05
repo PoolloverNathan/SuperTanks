@@ -6,6 +6,7 @@ incsrc "ram.asm"
 org $008000
 START:
     CLC : XCE : REP #$FF ; clear status
+    SEI
     SEP #$20 ; put A in 8-bit mode
     LDA #%10000000 : STA $2100 ; disable screen
     LDX #$01FF : TXS
@@ -15,8 +16,11 @@ START:
     MVN $00, $00
     JSR DECODEGFX
     SEP #%00110000 ; put registers in 8-bit mode
+    STZ $2121 ; CGADD = 0
+    JSR CGLOAD
     LDA #%10110000 : STA $4200 ; enable NMI and counters
     LDA #%00001111 : STA $2100 ; enable screen
+    CLI
     - ; idle loop since NMI handles everything
     WAI
     BRA -
@@ -28,9 +32,6 @@ INTERNMI:
     REP #$20 ; put A in 16-bit mode
     INC RAM.frame
     JSR OAMCPY ; also sets registers to 8-bit mode
-    STZ $2121 ; CGADD = 0
-    LDA RAM.frame : STA $2122
-    LDA RAM.frame+1 : STA $2122
     CLI
     PLA
     PLP
@@ -92,6 +93,28 @@ STI:
     STP
 NUI:
     RTI
+
+CG:
+    incbin "graphics.cgr"
+
+CGLOAD:
+    PHX
+    PHP
+    REP #$10
+    LDX #$0000
+    -
+    LDA CG,x
+    STA $2122
+    INX
+    LDA CG,x
+    STA $2122
+    INX
+    BIT #$80
+    BNE -
+    +
+    PLP
+    PLX
+    RTS
 
 RAMINIT:
     fill $FF

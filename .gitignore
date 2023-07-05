@@ -1,4 +1,4 @@
-supertanks.smc
-supertanks.sym
+*.smc
+*.sym
 *.rlb
-supertanks.sym
+*.cgr
