@@ -25,12 +25,11 @@ INTERNMI:
     PHA
     SEI
     REP #$20 ; put A in 16-bit mode
-    INC RAM.frame16
+    INC RAM.frame
     SEP #$20 ; put A in 8-bit mode
-    INC RAM.frame8
     STZ $2121 ; CGADD = 0
-    LDA RAM.frame16 : STA $2122
-    LDA RAM.frame16+1 : STA $2122
+    LDA RAM.frame : STA $2122
+    LDA RAM.frame+1 : STA $2122
     CLI
     PLA
     PLP
