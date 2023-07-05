@@ -1,6 +1,5 @@
 includefrom "supertanks.asm"
 
-warnpc $00FFB0
 org $00FFB0
     ; extended header
     db "NK" ; maker code
@@ -38,3 +37,4 @@ org $00FFB0
     dw NUI ; emulated IRQ
     print "Interrupt vector ends at ",pc
 warnpc $010000
+print ""

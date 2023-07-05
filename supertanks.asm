@@ -1,6 +1,6 @@
 asar 1.81
 lorom
-
+incsrc "headers.asm"
 incsrc "ram.asm"
 
 org $008000
@@ -43,8 +43,7 @@ NUI:
 RAMINIT:
     fill $FF
 
-incsrc "headers.asm"
-
+warnpc $00FFB0
 org $018000
 bank01:
 
@@ -52,5 +51,4 @@ warnpc $01FFFF
 org $01FFFF
 db $00 ; pad to length
 
-print ""
-print "Wrote ",bytes," bytes."
+print "Wrote ",bytes," bytes using ",hex(!RAMSIZE,4)," bytes of RAM."
