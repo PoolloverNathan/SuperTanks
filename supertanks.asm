@@ -27,7 +27,7 @@ INTERNMI:
     SEI
     REP #$20 ; put A in 16-bit mode
     INC RAM.frame
-    SEP #$20 ; put A in 8-bit mode
+    JSR OAMCPY ; also sets registers to 8-bit mode
     STZ $2121 ; CGADD = 0
     LDA RAM.frame : STA $2122
     LDA RAM.frame+1 : STA $2122
@@ -35,6 +35,31 @@ INTERNMI:
     PLA
     PLP
     RTI
+
+OAMCPY:
+    LDA #$0000
+    STA $2102 ; OAM address, and disable priority rotation
+    SEP #%00110000 ; put registers in 8-bit mode
+    LDX #$00
+    -
+    LDA RAM.oamx,x
+    STA $2104
+    LDA RAM.oamx+1,x
+    STA $2104
+    LDA RAM.oamy,x
+    STA $2104
+    LDA RAM.oamy+1,x
+    STA $2104
+    LDA RAM.oamt,x
+    STA $2104
+    LDA RAM.oamt+1,x
+    STA $2104
+    LDA RAM.oama,x
+    STA $2104
+    LDA RAM.oama+1,x
+    STA $2104
+    BPL -
+    RTS
 
 DECODEGFX: ; Loads graphics data into VRAM. Assumes 16-bit X/Y and puts A in 8 bit mode.
     LDX.w #0
