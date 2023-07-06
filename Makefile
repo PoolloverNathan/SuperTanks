@@ -1,7 +1,7 @@
 supertanks.smc: supertanks.asm graphics.rlb layer3.qbw palette.cgr menu.map.rev levels/square/bg.map.rev levels/square/fg.map.rev headers.asm levels.asm ram.asm
 
-%.smc %.sym: %.asm
-	$$ASAR/asar.exe --symbols=nocash ./supertanks.asm ./supertanks.smc
+supertanks.smc supertanks.sym supertanks.smc.err: supertanks.asm
+	x=0; $$ASAR/asar.exe --symbols=nocash ./supertanks.asm ./supertanks.smc 2> ./supertanks.smc.err ||x=$$?; cat supertanks.smc.err 1>&2; exit $$x
 
 %.rev: %
 	< $< xxd -p -c1 | tac | xxd -p -r > $@
