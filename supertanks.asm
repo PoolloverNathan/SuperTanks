@@ -22,6 +22,7 @@ START:
     LDY.w #!RAMSTART
     MVN $00, $00
     JSR DECODEGFX
+    JSR LOADLVL
     !AX8
     STZ $2121 ; CGADD = 0
     JSR CGLOAD
@@ -92,6 +93,23 @@ DECODEGFX: ; Loads graphics data into VRAM. Assumes 16-bit X/Y and puts A in 8 b
     INX #2 ; go to next repeat count
     BRA --
 
+LOADLVL:
+    PHA
+    PHP
+    !A8
+    LDA #$01 : STA $2105
+    LDA #$04 : STA $2107
+    !AX16
+    LDA.w #$400 : STA $2116
+    LDX #NSLVL_SQR_B-NSLVL_SQR_F
+    -
+    LDA NSLVL_SQR_F-2,x : XBA : STA $2118
+    DEX : DEX
+    BPL -
+    PLP
+    PLA
+    RTS
+
 GFX:
     incbin "graphics.rlb"
     db $FF
@@ -130,6 +148,7 @@ RAMINIT:
 warnpc $00FFB0
 org $018000
 bank01:
+    incsrc "levels.asm"
 
 warnpc $01FFFF
 org $01FFFF
