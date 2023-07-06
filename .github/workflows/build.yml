@@ -16,11 +16,9 @@ jobs:
     - name: Setup WSL
       uses: Vampire/setup-wsl@v2.0.1
     - name: Download Asar 1.81
-      run: wget https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip
-    - name: Install Asar 1.81
-      run: wsl bash -c "mkdir asar; mv asar181.zip asar; cd asar; unzip asar181.zip; cd .."
+      run: invoke-webrequest https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip | expand-archive
     - name: Run build
-      run: wsl ASAR=asar make
+      run: wsl ASAR=asar171 make
     - name: Put artifacts in separate directory
       run: |
         mkdir artifacts
