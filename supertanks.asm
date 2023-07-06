@@ -99,11 +99,18 @@ LOADLVL:
     !A8
     LDA #$01 : STA $2105
     LDA #$04 : STA $2107
+    LDA #$08 : STA $2108
     !AX16
-    LDA.w #$400 : STA $2116
+    LDA.w #$0400 : STA $2116
     LDX #NSLVL_SQR_B-NSLVL_SQR_F
     -
     LDA NSLVL_SQR_F-2,x : XBA : STA $2118
+    DEX : DEX
+    BPL -
+    LDA.w #$0800 : STA $2116
+    LDX #NSLVL_SQR_E-NSLVL_SQR_B
+    -
+    LDA NSLVL_SQR_B-2,x : XBA : STA $2118
     DEX : DEX
     BPL -
     PLP
