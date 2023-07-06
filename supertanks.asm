@@ -128,4 +128,4 @@ warnpc $01FFFF
 org $01FFFF
 db $00 ; pad to length
 
-print "Wrote ",bytes," bytes using ",dec(!RAMSIZE)," bytes of RAM."
+print "Wrote ",bytes," bytes, ",dec(!RAMSIZE)," of which are RAM."
