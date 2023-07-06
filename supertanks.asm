@@ -3,19 +3,26 @@ lorom
 incsrc "headers.asm"
 incsrc "ram.asm"
 
+!A16 = "REP #$20"
+!A8 = "SEP #$20"
+!X16 = "REP #$10"
+!X8 = "SEP #$10"
+!AX16 = "REP #$30"
+!AX8 = "SEP #$30"
+
 org $008000
 START:
     CLC : XCE : REP #$FF ; clear status
     SEI
-    SEP #$20 ; put A in 8-bit mode
-    LDA #%10000000 : STA $2100 ; disable screen
+    !A8
+    LDA #%10001111 : STA $2100 ; disable screen
     LDX #$01FF : TXS
     LDA.b #(!RAMSIZE)-1
     LDX.w #RAMINIT
     LDY.w #!RAMSTART
     MVN $00, $00
     JSR DECODEGFX
-    SEP #%00110000 ; put registers in 8-bit mode
+    !AX8
     STZ $2121 ; CGADD = 0
     JSR CGLOAD
     LDA #%10110000 : STA $4200 ; enable NMI and counters
@@ -29,7 +36,7 @@ INTERNMI:
     PHP
     PHA
     SEI
-    REP #$20 ; put A in 16-bit mode
+    !A16
     INC RAM.frame
     JSR OAMCPY ; also sets registers to 8-bit mode
     CLI
@@ -40,7 +47,7 @@ INTERNMI:
 OAMCPY:
     LDA #$0000
     STA $2102 ; OAM address, and disable priority rotation
-    SEP #%00110000 ; put registers in 8-bit mode
+    !AX8
     LDX #$00
     -
     LDA RAM.oamx,x
@@ -64,12 +71,12 @@ OAMCPY:
 
 DECODEGFX: ; Loads graphics data into VRAM. Assumes 16-bit X/Y and puts A in 8 bit mode.
     LDX.w #0
-    SEP #$20 ; put A in 8-bit mode
+    !A8
     LDA #$80 : STA $2115 ; prepare vram for writing words
-    REP #$20 ; put A in 16-bit mode
+    !A16
     STZ $2116 ; start writing to beginning of vram
     ; start actually decoding data
-    SEP #$20 ; put A in 8-bit mode
+    !A8
     --
     LDA GFX,x ; load repeat count
     CMP $FF ; magic number indicating end of data
@@ -100,7 +107,7 @@ CG:
 CGLOAD:
     PHX
     PHP
-    REP #$10 ; 16-bit X
+    !X16
     LDX #$0000
     -
     LDA CG,x ; load low byte of color...
