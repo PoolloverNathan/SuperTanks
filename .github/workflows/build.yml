@@ -1,0 +1,29 @@
+name: Build ROMs
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run build
+      run: make
+    - name: Put artifacts in separate directory
+      run: |
+        mkdir /tmp/supertanks-artifacts
+        mv supertanks.{smc,sym} /tmp/supertanks-artifacts
+    - name: Upload rom
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: supertanks
+        path: /tmp/supertanks-artifacts
+        if-no-files-found: error
+    - name: Clean up
+      run: rm -rf /tmp/supertanks-artifacts
