@@ -17,7 +17,7 @@ jobs:
       run: |
         $t = New-TemporaryFile | Rename-Item -NewName { $_ -replace 'tmp$', 'zip' } –PassThru
         Invoke-WebRequest -OutFile $t "https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip"
-        $t | Expand-Archive
+        $t | Expand-Archive -DestinationPath asar181
         $t | rm
     - name: Display tree
       run: tree
