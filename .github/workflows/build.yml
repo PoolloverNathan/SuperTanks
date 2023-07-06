@@ -25,8 +25,10 @@ jobs:
       uses: Vampire/setup-wsl@v2.0.1
     - name: Update WSL
       run: wsl -u root apt update
-    - name: Install make
+    - name: Install things
       run: wsl -u root apt install -y make python3
+    - name: Display another tree
+      run: wsl ls -r
     - name: Run build
       run: wsl ASAR=asar171 make
     - name: Put artifacts in separate directory
