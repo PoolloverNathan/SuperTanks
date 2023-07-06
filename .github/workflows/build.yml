@@ -28,7 +28,7 @@ jobs:
     - name: Install things
       run: wsl -u root apt install -y make python3
     - name: Display another tree
-      run: wsl ls -r
+      run: wsl ls -Rl
     - name: Run build
       run: wsl ASAR=asar171 make
     - name: Put artifacts in separate directory
