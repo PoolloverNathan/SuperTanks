@@ -24,7 +24,7 @@ jobs:
     - name: Update WSL
       run: wsl -u root apt update
     - name: Install make
-      run: wsl -u root apt install make python3
+      run: wsl -u root apt install -y make python3
     - name: Run build
       run: wsl ASAR=asar171 make
     - name: Put artifacts in separate directory
