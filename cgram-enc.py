@@ -12,9 +12,9 @@ with open(infile, "rb") as i:
         h = n >> 8
         cols.append((l, h))
         d = i.read(3)
-#last = cols.pop()
-#while cols[-1] == last:
-#    cols.pop()
+last = cols.pop()
+while cols[-1] == last:
+   cols.pop()
 ll, lh = cols.pop()
 lh |= 0x80 # set negative flag on high byte, which ends table
 cols.append((ll, lh))

@@ -100,17 +100,18 @@ CG:
 CGLOAD:
     PHX
     PHP
-    REP #$10
+    REP #$10 ; 16-bit X
     LDX #$0000
     -
-    LDA CG,x
-    STA $2122
-    INX
-    LDA CG,x
-    STA $2122
-    INX
-    BIT #$80
-    BNE -
+    LDA CG,x ; load low byte of color...
+    STA $2122 ; and store it
+    INX ; next byte
+    LDA CG,x ; load high byte...
+    STA $2122 ; and store it
+    BIT #$80 ; if negative...
+    BMI + ; exit loop
+    INX ; otherwise...
+    BRA - ; continue looping
     +
     PLP
     PLX
