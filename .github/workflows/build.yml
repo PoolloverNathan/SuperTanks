@@ -21,6 +21,8 @@ jobs:
         Invoke-WebRequest -OutFile $t "https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip"
         $t | Expand-Archive
         $t | rm
+    - name: Install make
+      run: wsl -u root apt install make
     - name: Run build    
       run: wsl ASAR=asar171 make
     - name: Put artifacts in separate directory
