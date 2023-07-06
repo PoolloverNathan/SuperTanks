@@ -9,21 +9,27 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
+    - name: Setup WSL
+      uses: Vampire/setup-wsl@v2.0.1
+    - name: Download Asar 1.81
+      run: wsl wget https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip
+    - name: Install Asar 1.81
+      run: wsl bash -c "mkdir asar; mv asar181.zip asar; cd asar; unzip asar181.zip; cd .."
     - name: Run build
-      run: make
+      run: wsl ASAR=asar make
     - name: Put artifacts in separate directory
       run: |
-        mkdir /tmp/supertanks-artifacts
-        mv supertanks.{smc,sym} /tmp/supertanks-artifacts
+        mkdir artifacts
+        mv supertanks.{smc,sym} artifacts
     - name: Upload rom
       uses: actions/upload-artifact@v3.1.2
       with:
         name: supertanks
-        path: /tmp/supertanks-artifacts
+        path: artifacts
         if-no-files-found: error
     - name: Clean up
-      run: rm -rf /tmp/supertanks-artifacts
+      run: del /s /q artifacts
