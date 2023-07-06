@@ -13,14 +13,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Setup WSL
-      uses: Vampire/setup-wsl@v2.0.1
     - name: Download Asar 1.81
       run: |
         $t = New-TemporaryFile | Rename-Item -NewName { $_ -replace 'tmp$', 'zip' } –PassThru
         Invoke-WebRequest -OutFile $t "https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip"
         $t | Expand-Archive
         $t | rm
+    - name: Display tree
+      run: tree
+    - name: Setup WSL
+      uses: Vampire/setup-wsl@v2.0.1
     - name: Update WSL
       run: wsl -u root apt update
     - name: Install make
