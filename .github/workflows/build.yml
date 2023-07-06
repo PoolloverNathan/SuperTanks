@@ -16,7 +16,7 @@ jobs:
     - name: Setup WSL
       uses: Vampire/setup-wsl@v2.0.1
     - name: Download Asar 1.81
-      run: wsl wget https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip
+      run: wget https://github.com/RPGHacker/asar/releases/download/v1.81/asar181.zip
     - name: Install Asar 1.81
       run: wsl bash -c "mkdir asar; mv asar181.zip asar; cd asar; unzip asar181.zip; cd .."
     - name: Run build
