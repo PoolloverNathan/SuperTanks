@@ -16,6 +16,7 @@ START:
     SEI
     !A8
     LDA #%10001111 : STA $2100 ; disable screen
+    LDA #$FF : STA $2133
     LDX #$01FF : TXS
     LDA.b #(!RAMSIZE)-1
     LDX.w #RAMINIT
@@ -102,7 +103,10 @@ LOADLVL:
     LDA #$01 : STA $2105
     LDA #$04 : STA $2107
     LDA #$08 : STA $2108
+    LDA #$0C : STA $2109
+    LDA #-$01 : STA $210E : STZ $210E : STA $2110 : STZ $2110
     !AX16
+    LDA #$0303 : STA $212C
     LDA.w #$0400 : STA $2116
     LDA #$0303 : STA $212C
     LDX #NSLVL_SQR_B-NSLVL_SQR_F
@@ -110,11 +114,21 @@ LOADLVL:
     LDA NSLVL_SQR_F-2,x : XBA : STA $2118
     DEX : DEX
     BPL -
+
     LDA.w #$0800 : STA $2116
     LDX #NSLVL_SQR_E-NSLVL_SQR_B
     -
     LDA NSLVL_SQR_B-2,x : XBA : STA $2118
     DEX : DEX
+    BPL -
+
+    !A8
+    LDA.w #$0C00 : STA $2116
+    LDX #LLL_E-LLL
+    -
+    LDA LLL-2,x : STA $2118
+    STZ $2119
+    DEX
     BPL -
     PLP
     PLA
