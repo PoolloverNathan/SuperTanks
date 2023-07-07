@@ -41,4 +41,4 @@ jobs:
         path: artifacts
         if-no-files-found: error
     - name: Clean up
-      run: del /s /q artifacts
+      run: rm -r -f artifacts
