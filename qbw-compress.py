@@ -19,7 +19,7 @@ indices = {}
 for i in range(len(items)):
     indices[items[i]] = i
 with open(outfile, "wb") as o:
-    o.write(byte(len(items)))
+    o.write(byte(len(items)-1))
     o.write(b"".join(items))
     for d in data:
         o.write(byte(indices[d]))
