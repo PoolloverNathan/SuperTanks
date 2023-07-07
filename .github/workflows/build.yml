@@ -30,7 +30,7 @@ jobs:
     - name: Display another tree
       run: wsl ls -Rl
     - name: Run build
-      run: wsl ASAR=asar171 make
+      run: wsl ASAR=asar181 make
     - name: Put artifacts in separate directory
       run: |
         mkdir artifacts
