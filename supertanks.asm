@@ -104,6 +104,7 @@ LOADLVL:
     LDA #$08 : STA $2108
     !AX16
     LDA.w #$0400 : STA $2116
+    LDA #$0303 : STA $212C
     LDX #NSLVL_SQR_B-NSLVL_SQR_F
     -
     LDA NSLVL_SQR_F-2,x : XBA : STA $2118
