@@ -1,6 +1,6 @@
 includefrom "supertanks.asm"
 
-!RAMSTART = $000000
+!RAMSTART = $7E0000
 org !RAMSTART
 struct RAM !RAMSTART
     .frame: skip 2
@@ -15,6 +15,7 @@ struct RAM !RAMSTART
     .end
 endstruct
 !RAMEND = RAM.end
+org !RAMEND : warnpc $7E8000
 
 !RAMSIZE = !RAMEND-!RAMSTART
 

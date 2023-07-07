@@ -38,7 +38,9 @@ INTERNMI:
     PHA
     SEI
     !A16
-    INC RAM.frame
+    LDA RAM.frame
+    INC A
+    STA RAM.frame
     JSR OAMCPY ; also sets registers to 8-bit mode
     CLI
     PLA
