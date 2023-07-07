@@ -33,8 +33,7 @@ jobs:
       run: wsl ASAR=asar181 make
     - name: Put artifacts in separate directory
       run: |
-        mkdir artifacts
-        mv supertanks.{smc,sym} artifacts
+        ls supertanks.smc, supertanks.sym | mv -d (mkdir artifacts)
     - name: Upload rom
       uses: actions/upload-artifact@v3.1.2
       with:
